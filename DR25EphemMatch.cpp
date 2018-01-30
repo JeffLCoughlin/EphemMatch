@@ -50,7 +50,7 @@ string tmpstr,tmpstr3[25];
 stringstream iss;
 ofstream outfile;
 ifstream infile;
-ofstream plotfile,posfile;
+ofstream posfile;
 datastruct tmpdata;
 double prat,trat;
 vector <datastruct> tcedat,koidat,kebdat,gebdat;
@@ -83,9 +83,7 @@ rowtol = 5.0;   // Row difference tolerance in pixels
 coltol = 5.0;   // Column difference tolerance pixels
 perratmax = 50.5;  // Maximum period ratio - Set to 50.5 so no period ratios higher than 50:1 are found.
 
-// Open GNUPlot plotting file
-plotfile.open("plotfile.gnu");
-plotfile << "set term postscript" << endl << "set output 'MatchGraph.ps'" << endl << "set xlabel 'RA (Hours)'" << endl << "set ylabel 'DEC (Deg)'" << endl;
+// Record positions of matches to later use in plotting if desired
 posfile.open("posfile.dat");
 
 
@@ -105,8 +103,6 @@ DOMATCH(ntce,ngeb,tcedat,gebdat,"TCEGEBMatches.txt");
 // Make plots
 cout << "Making plotting file..." << endl;
 posfile << "-1 " << RACENT << " " << DECCENT << endl;
-plotfile << "plot 'posfile.dat' u ($1==1 ? $2 : 1/0):3 pt 7 lc -1 ps 0.5 title '1:1', 'posfile.dat' u ($1==2 ? $2 : 1/0):3 pt 7 lc  1 ps 0.5 title '2:1', 'posfile.dat' u ($1>2 ? $2 : 1/0):3 pt 7 lc  3 ps 0.5 title '3:1+', 'posfile.dat' u ($1==-1 ? $2 : 1/0):3 pt 3 lc 2 ps 2 title 'FoV Center'" << endl;
-plotfile.close();
 posfile.close();
 
 // Bunch of system calls to make nicely formatted output files using unix tools
@@ -145,8 +141,6 @@ system("awk '{for(j=0;j<i;j++) if($1==a[j]) sw=1; if(sw==0) print($0); a[i]=$1; 
 cout << "Making Results File..." << endl;
 system("awk -f /home/jeff/KeplerJob/DR25/Code/BestMatch-To-Results.awk < BestMatches.txt | sort -k 1n | awk -f /home/jeff/KeplerJob/DR25/Code/RemoveRedundant.awk > Results.txt");
 
-// Make the plots
-system("gnuplot plotfile.gnu");
 
 // Clean up temp files
 system("rm tmp*");
@@ -312,13 +306,6 @@ for(i=0;i<N1;i++)
             k = rint(A2[j].period/A1[i].period);
 
           posfile << k << " " << setprecision(10) << A1[i].ra << " " << A1[i].dec << endl << setprecision(0) << k << " " << setprecision(10) << A2[j].ra << " " << A2[j].dec << endl;
-          plotfile << "set arrow from " << A1[i].ra << "," << A1[i].dec << " to " << A2[j].ra << "," << A2[j].dec << " nohead lc ";
-          if(k==1)
-            plotfile << "-1" << endl;
-          if(k==2)
-            plotfile << "1" << endl;
-          if(k>2)
-            plotfile << "3" << endl;
           }
         }
       }
