@@ -13,7 +13,7 @@ The EphemMatch code is provided, along with the required input files.
 
 The code is written in C++ and only requires the standard C++ library (specifically, the required libraries are iomainip, iostream, fstream, cmath, cstdlib, ssstream, and vector). It has been tested to work with the g++ compiler, but should work with any standard C++ compile.
 
-As part of the code, a postscript file is produced that plots all of the matches on the focal plane / CCD array, produced using Gnuplot (http://www.gnuplot.info/), which will need  be installed on your system if you want this. Else, the code should run fine, with an error that Gnuplot is not found and no plot will be produced.
+Optionally, a Gnuplot (http://www.gnuplot.info/) file is included (CCDPlot.gnu) to make nice PDF plots all of the matches on the focal plane / CCD array, using a file produced by the code (posfile.dat). So you will need Gnuplot with the pdfcairo terminal installed if you want to run the Gnuplot script.
 
 
 ### Compiling
@@ -31,8 +31,7 @@ To run EphemMatch, all filenames are hardcoded, so just type:
 ```
 ./match
 ```
-
-
+Four files called TCEXXXMatches.txt, where XXX is either TCE, KOI, KEP, or GEB, which contain information on all matches that occur, including period, epochs, magnitudes, match significances, and CCD positions. A match (two objects) are shown by two lines - blank lines seperate matches. The file "AllMatchesSorted.txt" combines all this information into one file, sorted by period. "BestMatches.txt" and "BestMatchesSorted.txt" pick the best (most likely parent) match for each child, with the former sorted by KIC ID and the later sorted by period. The file "PeriodGroups.txt" contains all matched objects (parents and children, one per line) grouped accordingly such that each group should contain one parent and then one or more children. Groups are separated by a blank line. Finally, "Results.txt" contains the list of TCEs that are identified to be likely false positives, along with accompanying information such as the most likely parent object, spacial distances and magnitude differences between the two objects, matching significances, and the most likely mechanism of contamination.
 
 
 ## Citing Model-Shift
@@ -46,5 +45,5 @@ http://adsabs.harvard.edu/abs/2017arXiv171006758T
 
 ## Future Updates
 
-Ideally this code would be re-written in Python and generalized so it can be used for TESS. I might one day.
+Ideally this code would be re-written in Python, parallelzed, and generalized so it can be used for TESS and other surveys. I might one day. Hooray to anyone that writes their own though.
 
