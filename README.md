@@ -34,9 +34,9 @@ To run EphemMatch, all filenames are hardcoded, so just type:
 Four files called TCEXXXMatches.txt, where XXX is either TCE, KOI, KEP, or GEB, which contain information on all matches that occur, including period, epochs, magnitudes, match significances, and CCD positions. A match (two objects) are shown by two lines - blank lines seperate matches. The file "AllMatchesSorted.txt" combines all this information into one file, sorted by period. "BestMatches.txt" and "BestMatchesSorted.txt" pick the best (most likely parent) match for each child, with the former sorted by KIC ID and the later sorted by period. The file "PeriodGroups.txt" contains all matched objects (parents and children, one per line) grouped accordingly such that each group should contain one parent and then one or more children. Groups are separated by a blank line. Finally, "Results.txt" contains the list of TCEs that are identified to be likely false positives, along with accompanying information such as the most likely parent object, spacial distances and magnitude differences between the two objects, matching significances, and the most likely mechanism of contamination.
 
 
-## Citing Model-Shift
+## Citing EphemMatch
 
-If using Model-Shift, please cite the following papers:
+If using EphemMatch, please cite the following papers:
 
 http://adsabs.harvard.edu/abs/2014AJ....147..119C
 
